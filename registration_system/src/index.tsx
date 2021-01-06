@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Header from './Components/Header';
+import Fornecedores from './Components/Fornecedores';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Header></Header>
+    <Fornecedores></Fornecedores>
   </React.StrictMode>,
   document.getElementById('root')
 );
