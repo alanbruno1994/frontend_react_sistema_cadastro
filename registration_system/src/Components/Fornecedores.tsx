@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../CSS/Global.css'
 import Table from './Table';
-import { Fornecedor } from '../Intefaces/stateFornecedores';
+import { Fornecedor } from '../Intefaces/statesAplication';
 import '../CSS/FornecedoresStyle.css'
 
 export default class Fornecedores extends Component {
