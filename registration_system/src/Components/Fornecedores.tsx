@@ -9,7 +9,7 @@ export default class Fornecedores extends Component {
         {
             name: "",
             cnpj: "",
-            category: "",
+            state: "",
             visable: "none"
         }
 
@@ -36,47 +36,47 @@ export default class Fornecedores extends Component {
                 {
                     name: "Alan",
                     cnpj: "44064530000179",
-                    category: "Teste1"
+                    state: "Teste1"
                 },
                 {
                     name: "Marcelo",
                     cnpj: "44064530000179",
-                    category: "Teste2"
+                    state: "Teste2"
                 },
                 {
                     name: "Pedro",
                     cnpj: "44064530000179",
-                    category: "Teste3"
+                    state: "Teste3"
                 },
                 {
                     name: "Carlos",
                     cnpj: "44064530000179",
-                    category: "Teste4"
+                    state: "Teste4"
                 },
                 {
                     name: "Silva",
                     cnpj: "44064530000179",
-                    category: "Teste5"
+                    state: "Teste5"
                 },
                 {
                     name: "Joao",
                     cnpj: "44064530000179",
-                    category: "Teste6"
+                    state: "Teste6"
                 },
                 {
                     name: "Pedro",
                     cnpj: "44064530000179",
-                    category: "Teste7"
+                    state: "Teste7"
                 },
                 {
                     name: "Marcus",
                     cnpj: "44064530000179",
-                    category: "Teste8"
+                    state: "Teste8"
                 },
                 {
                     name: "Felipe",
                     cnpj: "44064530000179",
-                    category: "Teste9"
+                    state: "Teste9"
                 }
 
             ];
@@ -99,7 +99,7 @@ export default class Fornecedores extends Component {
                 <div />
                 <div>
                     <div style={styles} ><span className="text_Title_pag font_Montserrat">Fornecedores</span> <button className="buttonPags background_green font_Montserrat text_color_withe" onClick={e => this.generateRegistration()}>Cadastrar fornecedor</button></div>
-                    <div><Table col1="Nome" col2="CNPJ" col3="Categoria" col4="Total de produtos" col5={list} /></div> </div>
+                    <div><Table col1="Nome" col2="CNPJ" col3="Estado" col4="Total de produtos" col5={list} /></div> </div>
                 <div />
             </div>
             <div className="width100 heigth100 background_transparent absolute_position flex-container_fornecedor" style={styleRegister}>

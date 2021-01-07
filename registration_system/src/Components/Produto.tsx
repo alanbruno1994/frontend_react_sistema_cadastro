@@ -161,7 +161,7 @@ export default class Fornecedores extends Component {
                 <div />
                 <div>
                     <div style={styles} ><span className="text_Title_pag font_Montserrat">Produtos</span><button className="buttonPags background_green font_Montserrat text_color_withe" onClick={e => this.generateRegistration()}>Cadastrar produtos</button><AiOutlineBars className="icon" onClick={e=>this.generateFilter()}/></div>
-                    <div><Table col1="Nome" col2="Código" col3="Categoria" col4="Fornecedor" col5={list} /></div> </div>
+                    <div><Table col1="Nome" col2="Código" col3="Estado" col4="Fornecedor" col5={list} /></div> </div>
                 <div />
             </div>
             <div className="width100 heigth100 background_transparent absolute_position flex-container_fornecedor" style={styleRegister}>

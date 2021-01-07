@@ -1,7 +1,7 @@
 export interface Fornecedor {
     name: string;
     cnpj: string;
-    category: string;
+    state: string;
     visable?: string | undefined 
     
 }

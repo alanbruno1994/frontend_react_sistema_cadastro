@@ -14,7 +14,7 @@ export default class Table extends Component<PropsTable> {
 
     instanceOfFornecedor(data: any): data is Fornecedor {
         if (data == null) return false;
-        return 'name' in data && 'cnpj' in data && 'category' in data;
+        return 'name' in data && 'cnpj' in data && 'state' in data;
     }
 
     generatingBody(): any {
@@ -26,7 +26,7 @@ export default class Table extends Component<PropsTable> {
                 fornecedores.forEach((x: Fornecedor) => item.push(<tr className="text_center">
                     <td>{x.name}</td>
                     <td>{x.cnpj}</td>
-                    <td>{x.category}</td>
+                    <td>{x.state}</td>
                     <td>{0}</td>
                 </tr>));
 
