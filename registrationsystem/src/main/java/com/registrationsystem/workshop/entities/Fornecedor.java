@@ -9,19 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "CNPJ",name = "fornecedor_uk"))//Aqui vai fazer cnpj se atributo unico
 public class Fornecedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name, cnpj, state;
-
+	private String name, state;
+	private String cnpj;
 	//@Autowired
 	//private ProdutoRepository produtoRepository;
 	@OneToMany(mappedBy = "fornecedor")

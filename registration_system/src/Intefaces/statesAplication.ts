@@ -6,6 +6,7 @@ export interface Fornecedor {
     totalProdutos: number;
     visable?: string | undefined 
     list?: Fornecedor[] | undefined
+    erro?: string | undefined
     
 }
 
@@ -18,6 +19,7 @@ export interface Produto
     fornecedor: 
     {
         name:string;
+        cnpj:string;
         id:number;
     }
 }
@@ -32,4 +34,6 @@ export interface statesProduto {
     code: string;
     category: string;
     fornecedor:string;
+    filtrer:string;
+    erro?: string | undefined
 }

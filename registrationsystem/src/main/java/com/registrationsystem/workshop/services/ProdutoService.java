@@ -3,12 +3,15 @@ package com.registrationsystem.workshop.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.registrationsystem.workshop.entities.Fornecedor;
 import com.registrationsystem.workshop.entities.Produto;
 import com.registrationsystem.workshop.repository.ProdutoRepository;
+import com.registrationsystem.workshop.services.exceptions.DuplicateElement;
+import com.registrationsystem.workshop.services.exceptions.ObjectNotFound;
 
 @Service
 public class ProdutoService {
@@ -23,13 +26,20 @@ public class ProdutoService {
 	
 	public void insertProduto(Produto produto)
 	{
-		produtoRepository.save(produto);
+		try {
+			produtoRepository.save(produto);
+		} catch (ConstraintViolationException e) {
+			throw new DuplicateElement("Existe produto com este codígo");
+		}catch (Exception e) {
+			throw new DuplicateElement("Existe produto com este codígo");
+		}
+		
 	}
 	
 	public Produto findById(Integer id) 
 	{
 		Optional<Produto> produto= produtoRepository.findById(id);
-		return produto.get();
+		return produto.orElseThrow(()->new ObjectNotFound("Produto não foi encontrado"));
 	}	
 	
 }

@@ -36,7 +36,7 @@ export default class Table extends Component<PropsTable> {
                     <td>{x.name}</td>
                     <td>{x.code}</td>
                     <td>{x.category}</td>
-                    <td>{x.fornecedor.name}</td>
+                    <td>{x.fornecedor.cnpj}</td>
                 </tr>));
 
             }

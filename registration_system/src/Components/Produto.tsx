@@ -6,9 +6,6 @@ import '../CSS/FornecedoresStyle.css'
 import { AiOutlineBars } from "react-icons/ai";
 import api from '../Services/Api';
 
-
-
-
 export default class Fornecedores extends Component {
     state: statesProduto =
         {
@@ -17,7 +14,9 @@ export default class Fornecedores extends Component {
             name: "",
             category: "",
             code: "",
-            fornecedor: ""
+            fornecedor: "",//e o cnpj
+            filtrer: "",//e o cnpj para filtrar
+            erro: ""
         }
 
     constructor(props: any) {
@@ -25,12 +24,13 @@ export default class Fornecedores extends Component {
         this.generateRegistration = this.generateRegistration.bind(this);
         this.closeRegistration = this.closeRegistration.bind(this);
         this.generateFilter = this.generateFilter.bind(this);
-        this.closeFilter = this.closeFilter.bind(this);     
+        this.closeFilter = this.closeFilter.bind(this);
         this.Cadastrar = this.Cadastrar.bind(this);
         this.updateCategory = this.updateCategory.bind(this);
         this.updateCode = this.updateCode.bind(this);
         this.updateFornecedor = this.updateFornecedor.bind(this);
         this.updateName = this.updateName.bind(this);
+        this.filtrerOperation = this.filtrerOperation.bind(this);
         this.closeRegistration();
     }
 
@@ -45,20 +45,25 @@ export default class Fornecedores extends Component {
         this.setState(this.state);
     }
 
-  
+
 
     generateRegistration() {
         this.state.visable = "flex";
         this.setState(this.state);
     }
 
-    closeRegistration() {       
+    closeRegistration() {
         api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {
             this.state.visable = "none";
-            this.state.list = [...e]; 
-            this.setState(this.state);           
-        });
-        
+            this.state.list = [...e];
+            this.state.erro = "";
+            this.setState(this.state);
+
+        }).catch((e: any) => {
+            this.state.erro = ""; this.state.visable = "none"; this.setState(this.state);
+        }
+        );
+
     }
 
     updateName(e: any) {
@@ -77,29 +82,74 @@ export default class Fornecedores extends Component {
         this.setState({ category: e.target.value })
     }
 
+    updateFiltrer(e: any) {
+        this.setState({ filtrer: e.target.value })
+    }
+
     Cadastrar() {
 
         if (this.state.name.length > 0 && this.state.code.length > 0 && this.state.category.length > 0 && this.state.fornecedor.length > 0) {
-            const post = {
-                name: this.state.name,
-                code: this.state.code,
-                category: this.state.category
-                
-            }
-            let id: number = -1;
-            this.state.list?.forEach(e => {
-                if (e.fornecedor.name === this.state.fornecedor) {
-                        id=e.fornecedor.id;
-                }
-            });
-            if(id!=-1)
-            {
-                api.post("produtos" + "/"+id, post);
-            }
+            if (this.state.code.length == 13) {
+                if (this.state.name.length >= 2) {
+                    if (this.state.name.length >= 2) {
+                        if (this.state.fornecedor.length == 14) {
+                            const post = {
+                                name: this.state.name,
+                                code: this.state.code,
+                                category: this.state.category
 
-           
+                            }
+                            api.post("produtos" + "/" + this.state.fornecedor, post).then(e => this.closeRegistration()).catch((erro) => {
+                                api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {
+                                    this.state.visable = "none"; this.state.list = [...e];
+                                    if (erro.response) {
+                                        this.state.erro = erro.response.data.message
+                                    }
+                                    console.log(this.state)
+                                    this.setState(this.state);
+                                    return
+                                });
+                            });
+                        } else {
+                            this.state.visable = "none";
+                            this.state.erro = "O CNPJ deve ter 14 números!"
+                            this.setState(this.state);
+                        }
+                    } else {
+                        this.state.visable = "none";
+                        this.state.erro = "A categoria deve ter pelo menos 2 caracteres!"
+                        this.setState(this.state);
+                    }
+                } else {
+                    this.state.visable = "none";
+                    this.state.erro = "O nome do produto deve ter pelo menos 2 caracteres!"
+                    this.setState(this.state);
+                }
+            } else {
+                this.state.visable = "none";
+                this.state.erro = "O código de barras deve ter 13 dígitos!"
+                this.setState(this.state);
+            }
+        } else {
+            this.state.visable = "none";
+            this.state.erro = "Por favor, para realizar o cadastro você deve preencher todos os campos!"
+            this.setState(this.state);
         }
-        this.closeRegistration();
+
+
+    }
+
+    filtrerOperation() {
+        api.get("produtos/cnpj/" + this.state.filtrer).then(resp => resp.data).then((e: Produto[]) => {
+            this.state.visableFilter = "none";
+            this.state.list = [...e];
+            this.state.erro = "";
+            this.setState(this.state);
+
+        }).catch((e: any) => {
+            this.state.erro = ""; this.state.visableFilter = "none"; this.setState(this.state);
+        }
+        );
 
     }
 
@@ -124,37 +174,14 @@ export default class Fornecedores extends Component {
         {
             width: "300px"
         }
-        let availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
+
 
         return <React.Fragment>
             <div className="grid-container_table relative_position">
                 <div />
                 <div>
                     <div style={styles} ><span className="text_Title_pag font_Montserrat">Produtos</span><button className="buttonPags background_green font_Montserrat text_color_withe" onClick={e => this.generateRegistration()}>Cadastrar produtos</button><AiOutlineBars className="icon" onClick={e => this.generateFilter()} /></div>
-                    <div><Table col1="Nome" col2="Código" col3="Estado" col4="Fornecedor" col5={this.state.list} /></div> </div>
+                    <div><Table col1="Nome" col2="Código" col3="Estado" col4="Fornecedor" col5={this.state.list} /> <div><h3>{this.state.erro}</h3></div></div> </div>
                 <div />
             </div>
             <div className="width100 heigth100 background_transparent absolute_position flex-container_fornecedor" style={styleRegister}>
@@ -164,7 +191,7 @@ export default class Fornecedores extends Component {
                     <div><b>Nome do produto</b></div>
                     <div><input type="text" className="width100" onChange={e => this.updateName(e)}></input></div>
                     <div><b>Fornecedor</b></div>
-                    <div><input type="text" className="width100" onChange={e => this.updateFornecedor(e)}></input></div>
+                    <div><input type="text" className="width100" onChange={e => this.updateFornecedor(e)} placeholder="Insira o CNPJ"></input></div>
                     <div className="grid-container_ThreeColun"><div><b>Código do produto</b></div><div /><div><b>Categoria</b></div></div>
                     <div className="grid-container_ThreeColun"><input type="text" className="width100 marginRight10px" onChange={e => this.updateCode(e)}></input><div /><input type="text" className="width100" onChange={e => this.updateCategory(e)}></input></div>
                     <div><button className="background_green text_color_withe buttonOperation" onClick={e => this.closeRegistration()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright" onClick={e => this.Cadastrar()}>Cadastrar</button></div>
@@ -175,10 +202,11 @@ export default class Fornecedores extends Component {
                 <div className="background_white areaRegisterFornecedor font_Montserrat">
                     <div><h3>Filtrar por fornecedor</h3></div>
                     <div><b>Fornecedor</b></div>
-                    <div><input type="text" style={style300px} ></input></div>
-                    <div><button className="background_green text_color_withe buttonOperation" onClick={e => this.closeFilter()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright">Filtrar</button></div>
+                    <div><input type="text" style={style300px} onChange={e => this.updateFiltrer(e)}></input></div>
+                    <div><button className="background_green text_color_withe buttonOperation" onClick={e => this.closeFilter()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright" onClick={e => this.filtrerOperation()}>Filtrar</button></div>
                 </div>
             </div>
+
         </React.Fragment>
     }
 

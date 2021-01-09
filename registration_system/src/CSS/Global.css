@@ -14,14 +14,11 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.float_left
-{
+.float_left {
     float: left;
 }
 
-
-.icon
-{
+.icon {
     float: right;
     width: 35px;
     height: 35px;
@@ -89,10 +86,6 @@
     float: left;
 }
 
-.separetedTableNot {
-    border-collapse: collapse;
-}
-
 .buttonPags {
     float: right;
     font-size: 1.2em;
@@ -101,16 +94,42 @@
     border-radius: 5px;
 }
 
+@media(min-width:0) and (max-width:600px) {
+    .text_Title_pag {
+        font-size: 1.2em;
+        font-weight: bold;
+        float: left;
+        margin-top: 10px;
+    }
+    .buttonPags {
+        float: right;
+        font-size: 0.8em;
+        margin-top: 10px;
+        height: 30px;
+        border-radius: 5px;
+    }
+    .icon {
+        float: right;
+        width: 25px;
+        height: 25px;
+        margin-top: 15px;
+        margin-right: 10px;
+    }
+}
+
+.separetedTableNot {
+    border-collapse: collapse;
+}
+
 .buttonOperation {
     float: right;
     font-size: 1em;
-    margin-top: 15px;   
+    margin-top: 15px;
     height: 30px;
     border-radius: 5px;
 }
 
-.margin10pxright
-{
+.margin10pxright {
     margin-right: 10px;
 }
 
@@ -122,7 +141,7 @@
     grid-template-areas: ". . .";
 }
 
-.link{
+.link {
     text-decoration: none;
     color: white;
 }

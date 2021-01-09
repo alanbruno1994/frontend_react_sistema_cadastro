@@ -18,17 +18,17 @@ public class Config implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
-		Fornecedor fornecedor1=new Fornecedor(null,"Silva","000132200","Bahia");
-		Fornecedor fornecedor2=new Fornecedor(null,"Simas","000132200","Rio de Janeiro");
-		Fornecedor fornecedor3=new Fornecedor(null,"Jorge","000132200","Santacarina");
+		Fornecedor fornecedor1=new Fornecedor(null,"Silva","000132201","Bahia");
+		Fornecedor fornecedor2=new Fornecedor(null,"Simas","000132202","Rio de Janeiro");
+		Fornecedor fornecedor3=new Fornecedor(null,"Jorge","000132203","Santacarina");
 		fornecedorService.insertFornecedor(fornecedor1);
 		fornecedorService.insertFornecedor(fornecedor2);
 		fornecedorService.insertFornecedor(fornecedor3);
 		
-		Produto produto1=new Produto(null,"Biscoito","000132200","Comidas",fornecedor1);
-		Produto produto2=new Produto(null,"Milho","000132200","Comidas",fornecedor2);
-		Produto produto3=new Produto(null,"Refrigerante","000132200","Liquidos",fornecedor3);
-		Produto produto4=new Produto(null,"Refrigerante Limao","000132200","Liquidos",fornecedor3);
+		Produto produto1=new Produto(null,"Biscoito","0001322","Comidas",fornecedor1);
+		Produto produto2=new Produto(null,"Milho","0001323","Comidas",fornecedor2);
+		Produto produto3=new Produto(null,"Refrigerante","0001324","Liquidos",fornecedor3);
+		Produto produto4=new Produto(null,"Refrigerante Limao","0001325","Liquidos",fornecedor3);
 		produtoService.insertProduto(produto1);
 		produtoService.insertProduto(produto2);
 		produtoService.insertProduto(produto3);
