@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
 @Entity
 public class Fornecedor implements Serializable {
 	private static final long serialVersionUID = 1L;

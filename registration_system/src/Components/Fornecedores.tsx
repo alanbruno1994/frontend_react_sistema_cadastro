@@ -3,13 +3,18 @@ import '../CSS/Global.css'
 import Table from './Table';
 import { Fornecedor } from '../Intefaces/statesAplication';
 import '../CSS/FornecedoresStyle.css'
+import api from '../Services/Api';
+
 
 export default class Fornecedores extends Component {
+    list:Fornecedor[]=[];
+
     state: Fornecedor =
-        {
+        {            
             name: "",
             cnpj: "",
             state: "",
+            totalProdutos:0,
             visable: "none"
         }
 
@@ -17,6 +22,26 @@ export default class Fornecedores extends Component {
         super(props);
         this.generateRegistration = this.generateRegistration.bind(this);
         this.closeRegistration=this.closeRegistration.bind(this);
+        this.update=this.update.bind(this);
+        this.capturedList=this.capturedList.bind(this);
+        this.updateCNPJ=this.updateCNPJ.bind(this);
+        this.updateName=this.updateName.bind(this);
+        this.updateState=this.updateState.bind(this);
+        this.Cadastrar=this.Cadastrar.bind(this);
+        this.update();
+    }
+
+    capturedList(elements:Fornecedor[])
+    {
+        this.list=[...elements];
+    }
+
+    update()
+    {      
+        api.get("fornecedores").then(resp =>resp.data).then((e:Fornecedor[])=> 
+        {this.state.visable="none";this.state.list=[...e]; this.setState(this.state);
+         });
+      
     }
 
     generateRegistration() {
@@ -29,57 +54,34 @@ export default class Fornecedores extends Component {
         this.setState(this.state);
     }
 
+    updateName(e: any) {
+        this.setState({ name: e.target.value })
+    }
+
+    updateCNPJ(e: any) {
+        this.setState({ cnpj: e.target.value })
+    }
+
+    updateState(e: any) {
+        this.setState({ state: e.target.value })
+    }
+
+    Cadastrar() {
+        console.log(this.state);
+        if (this.state.name.length > 0 && this.state.cnpj.length > 0 && this.state.state.length > 0) {
+            const post = {
+                name: this.state.name,
+                cnpj: this.state.cnpj,
+                state: this.state.state               
+            }           
+            api.post("fornecedores", post);
+        }
+        this.setState({ visable: "noVisible" });
+    }
+
 
     render() {
-        let list: Fornecedor[] =
-            [
-                {
-                    name: "Alan",
-                    cnpj: "44064530000179",
-                    state: "Teste1"
-                },
-                {
-                    name: "Marcelo",
-                    cnpj: "44064530000179",
-                    state: "Teste2"
-                },
-                {
-                    name: "Pedro",
-                    cnpj: "44064530000179",
-                    state: "Teste3"
-                },
-                {
-                    name: "Carlos",
-                    cnpj: "44064530000179",
-                    state: "Teste4"
-                },
-                {
-                    name: "Silva",
-                    cnpj: "44064530000179",
-                    state: "Teste5"
-                },
-                {
-                    name: "Joao",
-                    cnpj: "44064530000179",
-                    state: "Teste6"
-                },
-                {
-                    name: "Pedro",
-                    cnpj: "44064530000179",
-                    state: "Teste7"
-                },
-                {
-                    name: "Marcus",
-                    cnpj: "44064530000179",
-                    state: "Teste8"
-                },
-                {
-                    name: "Felipe",
-                    cnpj: "44064530000179",
-                    state: "Teste9"
-                }
-
-            ];
+        
 
         const styles =
         {
@@ -89,17 +91,14 @@ export default class Fornecedores extends Component {
         {
             display: this.state.visable
         }
-        const padding=
-        {
-            ["padding-left"]: "10px"
-        }
+      
 
         return <React.Fragment>
             <div className="grid-container_table relative_position">
                 <div />
                 <div>
                     <div style={styles} ><span className="text_Title_pag font_Montserrat">Fornecedores</span> <button className="buttonPags background_green font_Montserrat text_color_withe" onClick={e => this.generateRegistration()}>Cadastrar fornecedor</button></div>
-                    <div><Table col1="Nome" col2="CNPJ" col3="Estado" col4="Total de produtos" col5={list} /></div> </div>
+                    <div><Table col1="Nome" col2="CNPJ" col3="Estado" col4="Total de produtos" col5={this.state.list} /></div> </div>
                 <div />
             </div>
             <div className="width100 heigth100 background_transparent absolute_position flex-container_fornecedor" style={styleRegister}>
@@ -107,10 +106,10 @@ export default class Fornecedores extends Component {
                 <div className="background_white areaRegisterFornecedor font_Montserrat">
                     <div><h3>Cadastrar Fornecedor</h3></div>
                     <div>Nome</div>
-                    <div><input type="text" className="width100"></input></div>
+                    <div><input type="text" className="width100" onChange={e=>this.updateName(e)}></input></div>
                     <div className="grid-container_ThreeColun"><div>CNPJ</div><div/><div>Categoria</div></div>
-                    <div className="grid-container_ThreeColun"><input type="text" className="width100 marginRight10px"></input><div/><input type="text" className="width100"></input></div>
-                    <div><button className="background_green text_color_withe buttonOperation" onClick={e=>this.closeRegistration()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright">Cadastrar</button></div>
+                    <div className="grid-container_ThreeColun"><input type="text" className="width100 marginRight10px" onChange={e=>this.updateCNPJ(e)} ></input><div/><input type="text" className="width100" onChange={e=>this.updateState(e)}></input></div>
+                    <div><button className="background_green text_color_withe buttonOperation" onClick={e=>this.closeRegistration()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright" onClick={e=>this.Cadastrar()}>Cadastrar</button></div>
                 </div>
               
             </div>
