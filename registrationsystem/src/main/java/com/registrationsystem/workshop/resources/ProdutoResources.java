@@ -44,6 +44,14 @@ public class ProdutoResources {
 		return ResponseEntity.ok().body(produto);
 	}
 	
+	@GetMapping(value="/codes/{code}")
+	public ResponseEntity<Produto> findCode(@PathVariable  String code)
+	{	
+		System.out.print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+code);
+		Produto produto=produtoService.findByCode(code);
+		return ResponseEntity.ok().body(produto);
+	}
+	
 	@GetMapping(value="/cnpj/{cnpj}")
 	public ResponseEntity<List<Produto>> findId(@PathVariable  String cnpj)
 	{

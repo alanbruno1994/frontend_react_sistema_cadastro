@@ -42,6 +42,13 @@ public class ProdutoService {
 		return produto.orElseThrow(()->new ObjectNotFound("Produto não foi encontrado"));
 	}	
 	
+	public Produto findByCode(String code) 
+	{
+		Produto produto= produtoRepository.findProdutoByCode(code);
+		if(produto==null) { throw new ObjectNotFound("Produto não foi encontrado");}
+		return produto;
+	}	
+	
 	public void removeById(Integer id) {
 		produtoRepository.deleteById(id);		
 	}

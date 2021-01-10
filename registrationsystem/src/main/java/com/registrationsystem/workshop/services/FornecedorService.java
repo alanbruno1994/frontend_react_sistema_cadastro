@@ -33,6 +33,9 @@ public class FornecedorService {
 			throw new DuplicateElement("Existe fornecedor com este CNPJ");
 		}
 	}
+	
+	
+	
 
 	public Fornecedor findById(Integer id) {
 		Optional<Fornecedor> fornecedor = fornecedorRepository.findById(id);
@@ -48,5 +51,9 @@ public class FornecedorService {
 			throw new CompositeException("Este fornecedor tem produto, por tanto você deve deletar os produtos para que ele seja apagado!");
 		}
 	}
+	
+	
+	
+	
 
 }
