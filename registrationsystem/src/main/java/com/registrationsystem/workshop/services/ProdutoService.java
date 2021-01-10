@@ -42,4 +42,7 @@ public class ProdutoService {
 		return produto.orElseThrow(()->new ObjectNotFound("Produto não foi encontrado"));
 	}	
 	
+	public void removeById(Integer id) {
+		produtoRepository.deleteById(id);		
+	}
 }

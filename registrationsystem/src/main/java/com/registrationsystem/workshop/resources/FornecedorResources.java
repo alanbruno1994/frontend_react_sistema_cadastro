@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.registrationsystem.workshop.entities.Fornecedor;
 import com.registrationsystem.workshop.services.FornecedorService;
 
-@CrossOrigin(origins = "http://localhost:8080")
+
 @RestController
 @RequestMapping(value="/fornecedores")
 public class FornecedorResources {
@@ -23,7 +24,7 @@ public class FornecedorResources {
 	@Autowired
 	private FornecedorService fornecedorService;
 	
-	@CrossOrigin(origins = "http://localhost:8080/fornecedores")
+
 	@GetMapping
 	public ResponseEntity<List<Fornecedor>> findAll()
 	{
@@ -42,6 +43,13 @@ public class FornecedorResources {
 	public ResponseEntity<Void> isertFornecedor(@RequestBody Fornecedor fornecedor)
 	{
 		fornecedorService.insertFornecedor(fornecedor);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping(value="/{Id}")
+	public ResponseEntity<Void> deleteById(@PathVariable  Integer Id)
+	{	
+		fornecedorService.removeById(Id);
 		return ResponseEntity.noContent().build();
 	}
 

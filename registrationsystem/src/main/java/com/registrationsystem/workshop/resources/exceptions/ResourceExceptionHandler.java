@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.registrationsystem.workshop.services.exceptions.CompositeException;
 import com.registrationsystem.workshop.services.exceptions.DuplicateElement;
 import com.registrationsystem.workshop.services.exceptions.ObjectNotFound;
 
@@ -24,6 +25,13 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(DuplicateElement.class)
 	public ResponseEntity<StandardError> resourceNotFound(DuplicateElement e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.CONFLICT;
+		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(CompositeException.class)
+	public ResponseEntity<StandardError> resourceNotFound(CompositeException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
