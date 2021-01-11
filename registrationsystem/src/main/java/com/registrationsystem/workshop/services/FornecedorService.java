@@ -29,7 +29,11 @@ public class FornecedorService {
 			fornecedorRepository.save(fornecedor);
 		} catch (ConstraintViolationException e) {
 			throw new DuplicateElement("Existe fornecedor com este CNPJ");
-		} catch (Exception e) {
+		}catch(IllegalStateException e) 
+		{
+			throw new DuplicateElement("Existe fornecedor com este CNPJ");
+		}
+		catch (Exception e) {
 			throw new DuplicateElement("Existe fornecedor com este CNPJ");
 		}
 	}
