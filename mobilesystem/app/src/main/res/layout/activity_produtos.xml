@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/green"
      android:orientation="vertical"
-    tools:context=".Produtos">
+    tools:context=".activitys.Produtos">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -145,7 +145,6 @@
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="ID"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -157,13 +156,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/nome"
+                                android:id="@+id/name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Nome"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -175,13 +173,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/codigo"
+                                android:id="@+id/code"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Estado"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -193,13 +190,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/categoria"
+                                android:id="@+id/category"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="CNPJ"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -211,13 +207,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/fornecedor"
+                                android:id="@+id/total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Total Produtos"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>

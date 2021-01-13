@@ -7,7 +7,7 @@
     android:background="@color/green"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Fornecedores">
+    tools:context=".activitys.Fornecedores">
 
 
     <ScrollView
@@ -18,14 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:stretchColumns="1">
+                android:stretchColumns="0">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -148,7 +148,6 @@
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="ID"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -160,13 +159,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/nome"
+                                android:id="@+id/name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Nome"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -178,13 +176,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/codigo"
+                                android:id="@+id/state"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Estado"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -196,13 +193,12 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/categoria"
+                                android:id="@+id/cnpj"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="CNPJ"
                                 android:textAlignment="center"
                                 android:textColor="@color/black" />
                         </LinearLayout>
@@ -214,15 +210,15 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/fornecedor"
+                                android:id="@+id/total"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@color/white"
                                 android:gravity="center"
-                                android:text="Total Produtos"
                                 android:textAlignment="center"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/black"
+                                android:visibility="visible" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -231,4 +227,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

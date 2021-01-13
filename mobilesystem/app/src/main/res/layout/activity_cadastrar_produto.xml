@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/green"
-    tools:context=".CadastrarProduto">
+    tools:context=".activitys.CadastrarProduto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,13 +15,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Name"
             android:inputType="textPersonName"
-            android:text="Name"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -33,13 +33,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Code"
             android:inputType="textPersonName"
-            android:text="Code"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -52,13 +52,13 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Categoria"
             android:inputType="textPersonName"
-            android:text="Categoria"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -71,13 +71,13 @@
         android:orientation="horizontal" >
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/cnpj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Fornecedor(CNPJ)"
             android:inputType="textPersonName"
-            android:text="Fornecedor"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -90,7 +90,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/buttonRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

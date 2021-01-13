@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mobilesystem">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Main">
-        <activity android:name=".CadastrarFornecedor"></activity>
-        <activity android:name=".CadastrarProduto" />
-        <activity android:name=".Produtos" />
-        <activity android:name=".Fornecedores" />
-        <activity android:name=".Menu" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activitys.RemoveProduto"></activity>
+        <activity android:name=".activitys.RemoveFornecedor" />
+        <activity android:name=".activitys.CadastrarFornecedor" />
+        <activity android:name=".activitys.CadastrarProduto" />
+        <activity android:name=".activitys.Produtos" />
+        <activity android:name=".activitys.Fornecedores" />
+        <activity android:name=".activitys.MenuSystem" />
+        <activity android:name=".activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
