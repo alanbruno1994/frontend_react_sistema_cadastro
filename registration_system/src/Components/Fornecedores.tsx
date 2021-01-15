@@ -4,6 +4,7 @@ import Table from './Table';
 import { Fornecedor } from '../Intefaces/statesAplication';
 import '../CSS/FornecedoresStyle.css'
 import api from '../Services/Api';
+import Header from './Header';
 
 
 export default class Fornecedores extends Component {
@@ -120,6 +121,7 @@ export default class Fornecedores extends Component {
 
 
         return <React.Fragment>
+            <Header></Header>
             <div className="grid-container_table relative_position">
                 <div />
                 <div>

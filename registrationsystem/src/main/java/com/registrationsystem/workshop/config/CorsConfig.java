@@ -17,7 +17,8 @@ public class CorsConfig {
 			{
 				registry.addMapping("/**")
 				.allowedMethods("GET","POST","DELET","PUT")
-				.allowedHeaders("*")
+				.allowedHeaders("Authorization")
+				.allowedHeaders("*")				
 				.allowedOrigins("*");//Aqui voce coloca endereco e porta de que esta acessando e * e generico
 				//.allowedOrigins("http://localhost:3000");//endereco e porta especifico
 			}

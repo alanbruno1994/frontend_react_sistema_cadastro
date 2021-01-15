@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -34,6 +35,20 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> resourceNotFound(CompositeException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.CONFLICT;
 		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(InvalidToken.class)
+	public ResponseEntity<StandardError> resourceNotFound(InvalidToken e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.LOCKED;
+		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(MissingRequestHeaderException.class)
+	public ResponseEntity<StandardError> resourceNotFound(MissingRequestHeaderException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.LOCKED;
+		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", "Não foi passado o token!", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 	

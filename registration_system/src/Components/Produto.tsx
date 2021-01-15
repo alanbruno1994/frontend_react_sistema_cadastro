@@ -5,6 +5,9 @@ import { Fornecedor, Produto, statesProduto } from '../Intefaces/statesAplicatio
 import '../CSS/FornecedoresStyle.css'
 import { AiOutlineBars } from "react-icons/ai";
 import api from '../Services/Api';
+import Header from './Header';
+import { Erro } from '../Intefaces/InterfaceErro';
+
 
 export default class Fornecedores extends Component {
     state: statesProduto =
@@ -52,14 +55,23 @@ export default class Fornecedores extends Component {
         this.setState(this.state);
     }
 
-    closeRegistration() {
-        api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {
+    closeRegistration() {    
+        api.defaults.headers.common['Authorization'] = ""+sessionStorage.getItem("tk");
+        
+        api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {            
             this.state.visable = "none";
             this.state.list = [...e];
             this.state.erro = "";
             this.setState(this.state);
 
-        }).catch((e: any) => {
+        }).catch((e: any) => {            
+        
+            if(e.response.status=423)
+            {
+                sessionStorage.setItem("tk","")
+                sessionStorage.setItem("invalid","Sua conta foi experida, entre novamente!")
+                window.location.href = "http://localhost:3000";
+            }
             this.state.erro = ""; this.state.visable = "none"; this.setState(this.state);
         }
         );
@@ -177,6 +189,7 @@ export default class Fornecedores extends Component {
 
 
         return <React.Fragment>
+            <Header></Header>
             <div className="grid-container_table relative_position">
                 <div />
                 <div>

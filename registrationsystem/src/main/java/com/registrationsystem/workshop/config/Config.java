@@ -1,14 +1,15 @@
 package com.registrationsystem.workshop.config;
 
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.registrationsystem.workshop.entities.Fornecedor;
 import com.registrationsystem.workshop.entities.Produto;
+import com.registrationsystem.workshop.entities.UserSystem;
 import com.registrationsystem.workshop.services.FornecedorService;
 import com.registrationsystem.workshop.services.ProdutoService;
+import com.registrationsystem.workshop.services.UserService;
 
 @Configuration 
 public class Config implements CommandLineRunner{
@@ -16,9 +17,19 @@ public class Config implements CommandLineRunner{
 	private ProdutoService produtoService;
 	@Autowired
 	private FornecedorService fornecedorService;
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public void run(String... args) throws Exception {
+		try {
+			userService.insertUser(new UserSystem(null,"root","123456"));
+			
+		}catch(Exception e) 
+		{
+			
+		}
+		
 		try {
 		Fornecedor fornecedor1=new Fornecedor(null,"Silva","000132201","Bahia");
 		Fornecedor fornecedor2=new Fornecedor(null,"Simas","000132202","Rio de Janeiro");
@@ -35,7 +46,7 @@ public class Config implements CommandLineRunner{
 		produtoService.insertProduto(produto2);
 		produtoService.insertProduto(produto3);
 		produtoService.insertProduto(produto4);
-		}catch(IllegalStateException e) 
+		}catch(Exception e) 
 		{
 			
 		}
