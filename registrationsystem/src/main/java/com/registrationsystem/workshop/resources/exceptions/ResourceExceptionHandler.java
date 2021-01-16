@@ -39,14 +39,21 @@ public class ResourceExceptionHandler {
 	}
 	
 	@ExceptionHandler(InvalidToken.class)
-	public ResponseEntity<StandardError> resourceNotFound(InvalidToken e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> resourceNotFound(InvalidToken e, HttpServletRequest request) {		
 		HttpStatus status = HttpStatus.LOCKED;
 		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
 	
 	@ExceptionHandler(MissingRequestHeaderException.class)
-	public ResponseEntity<StandardError> resourceNotFound(MissingRequestHeaderException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> resourceNotFound(MissingRequestHeaderException e, HttpServletRequest request) {	
+		HttpStatus status = HttpStatus.LOCKED;
+		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", "Não foi passado o token!", request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<StandardError> resourceNotFound(Exception e, HttpServletRequest request) {		
 		HttpStatus status = HttpStatus.LOCKED;
 		StandardError err = new StandardError(Instant.now(), status.value(), "Erro causado devido:", "Não foi passado o token!", request.getRequestURI());
 		return ResponseEntity.status(status).body(err);

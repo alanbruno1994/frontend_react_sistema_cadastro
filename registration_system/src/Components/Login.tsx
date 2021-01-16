@@ -22,8 +22,8 @@ export default class Login extends Component {
 
     state:LoginInteface=
     {
-        name:"",
-        password:""
+        name:"root",
+        password:"123456"
     }
 
     updateName(e: any) {
@@ -49,16 +49,17 @@ export default class Login extends Component {
     }
 
 
-    render() {        
+    render() {    
+            
         return <React.Fragment>
             <div className="grid-container-login heigth100 font_Montserrat">
             <div/><div/><div/>
                 <div />
                 <div>
                     <div><h3>Nome de usuario:</h3></div>
-                    <div><input type="text" className="width100" onChange={e => this.updateName(e)}></input></div>
+                    <div><input type="text" value={this.state.name} className="width100" onChange={e => this.updateName(e)}></input></div>
                     <div><h3>Senha:</h3></div>
-                    <div><input type="text" className="width100" onChange={e => this.updatePassword(e)}></input></div>
+                    <div><input type="password" value={this.state.password} className="width100" onChange={e => this.updatePassword(e)}></input></div>
                     <div><button className="background_green text_color_withe buttonOperation" onClick={e=>this.logIn()}>Logar</button><b>{sessionStorage.getItem("invalid")}</b></div>
                     
                 </div>

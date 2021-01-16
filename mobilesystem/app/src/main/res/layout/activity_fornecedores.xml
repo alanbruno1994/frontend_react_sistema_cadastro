@@ -51,7 +51,8 @@
                                 android:gravity="center"
                                 android:text="ID"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="8sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -68,7 +69,8 @@
                                 android:gravity="center"
                                 android:text="Nome"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="8sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -85,7 +87,8 @@
                                 android:gravity="center"
                                 android:text="Estado"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="8sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -102,7 +105,8 @@
                                 android:gravity="center"
                                 android:text="CNPJ"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="8sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -119,7 +123,8 @@
                                 android:gravity="center"
                                 android:text="Total Produtos"
                                 android:textAlignment="center"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="8sp" />
                         </LinearLayout>
                     </LinearLayout>
 

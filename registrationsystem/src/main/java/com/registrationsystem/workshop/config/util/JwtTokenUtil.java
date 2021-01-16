@@ -19,7 +19,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenUtil implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;
-	public static final long JWT_TOKEN_VALIDITY = 1 * 60 * 1000;// 1 minutos
+	public static final long JWT_TOKEN_VALIDITY = 24* 60 * 60 * 1000;// 3 horas
 	//public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000;// 24 horas
 
 	@Value("${jwt.secret}")
@@ -65,6 +65,10 @@ public class JwtTokenUtil implements Serializable {
 
 	// valida o token
 	public Boolean validateToken(String token) {
+		if(token.contains("{\"token\""))
+		{	
+			token=token.replaceAll(".*:\"|\".", "");			
+		}
 		try {			
 			Claims claims = decodeToken(token);
 			System.out.println(claims.getIssuer());

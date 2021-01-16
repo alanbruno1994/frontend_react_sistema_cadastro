@@ -1,5 +1,6 @@
 package com.example.mobilesystem.activitys;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.mobilesystem.R;
-import com.example.mobilesystem.entities.Fornecedor;
+import com.example.mobilesystem.constants.Constants;
 import com.example.mobilesystem.entities.Produto;
 
 import java.io.PrintStream;
@@ -20,9 +23,9 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class CadastrarProduto extends AppCompatActivity {
-    private EditText name, code, category, fornecedorCNPJ;
-    private Button register;
-    private static String URL = "https://app-backendjava.herokuapp.com";
+    private BootstrapEditText name, code, category, fornecedorCNPJ;
+    private BootstrapButton register;
+    private boolean erroTeste = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class CadastrarProduto extends AppCompatActivity {
         category = findViewById(R.id.category);
         fornecedorCNPJ = findViewById(R.id.cnpj);
         register = findViewById(R.id.buttonRemove);
+        setTitle("Cadastrar Produto");
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +74,14 @@ public class CadastrarProduto extends AppCompatActivity {
 
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent it = new Intent(CadastrarProduto.this, Produtos.class);
+                startActivity(it);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
 
@@ -81,11 +93,11 @@ public class CadastrarProduto extends AppCompatActivity {
 
             try {
                 Produto produto = new Produto(null, name.getText().toString(), code.getText().toString(), category.getText().toString());
-                URL url = new URL(URL + "/produtos/" + cnpj);
+                URL url = new URL(Constants.getURL() + "/produtos/" + cnpj);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setRequestMethod("POST");
-
+                connection.setRequestProperty("Authorization", Constants.getToken());
                 connection.setRequestProperty("Content-type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
 
@@ -100,16 +112,24 @@ public class CadastrarProduto extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                erroTeste = true;
             }
             return null;
         }
 
         protected void onPostExecute(Void result) {
-            Toast.makeText(CadastrarProduto.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
-            register.setVisibility(View.VISIBLE);
-            Intent it=new Intent(CadastrarProduto.this, Produtos.class);
-            startActivity(it);
+            if (erroTeste == false) {
+                Toast.makeText(CadastrarProduto.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
+                register.setVisibility(View.VISIBLE);
+                Intent it = new Intent(CadastrarProduto.this, Produtos.class);
+                startActivity(it);
+            }else
+                {
+                    Toast.makeText(CadastrarProduto.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CadastrarProduto.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
         }
     }
 }

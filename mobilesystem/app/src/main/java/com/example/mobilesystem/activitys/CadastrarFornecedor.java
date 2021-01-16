@@ -1,5 +1,6 @@
 package com.example.mobilesystem.activitys;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.mobilesystem.R;
+import com.example.mobilesystem.constants.Constants;
 import com.example.mobilesystem.entities.Fornecedor;
 
 import java.io.PrintStream;
@@ -19,9 +23,10 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class CadastrarFornecedor extends AppCompatActivity {
-    private EditText name, state, fornecedorCNPJ;
-    private Button register;
-    private static String URL = "https://app-backendjava.herokuapp.com";
+    private BootstrapEditText name, state, fornecedorCNPJ;
+    private BootstrapButton register;
+    private boolean erroTeste=false;
+   //"https://app-backendjava.herokuapp.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class CadastrarFornecedor extends AppCompatActivity {
         state = findViewById(R.id.state);
         fornecedorCNPJ = findViewById(R.id.cnpj);
         register = findViewById(R.id.buttonRemove);
+        setTitle("Cadastrar Fornecedor");
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +66,15 @@ public class CadastrarFornecedor extends AppCompatActivity {
                 }
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                System.out.println("Teste ");
+                Intent it=new Intent(CadastrarFornecedor.this,Fornecedores.class);
+                startActivity(it);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private class RegisterFornecedor extends AsyncTask<Void, Void, Void> {
@@ -70,9 +85,9 @@ public class CadastrarFornecedor extends AppCompatActivity {
 
             try {
                 Fornecedor fornecedor = new Fornecedor(null, name.getText().toString(), state.getText().toString(),cnpj,null);
-                java.net.URL url = new URL(URL+"/fornecedores/");
+                java.net.URL url = new URL(Constants.getURL()+"/fornecedores/");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
+                connection.setRequestProperty ("Authorization", Constants.getToken());
                 connection.setRequestMethod("POST");
 
                 connection.setRequestProperty("Content-type", "application/json"); connection.setRequestProperty("Accept", "application/json");
@@ -87,16 +102,24 @@ public class CadastrarFornecedor extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                erroTeste=true;
             }
             return null;
         }
 
         protected void onPostExecute(Void result) {
-            Toast.makeText(CadastrarFornecedor.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
-            register.setVisibility(View.VISIBLE);
-            Intent it=new Intent(CadastrarFornecedor.this,Fornecedores.class);
-            startActivity(it);
+           if(erroTeste==false) {
+               Toast.makeText(CadastrarFornecedor.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
+               register.setVisibility(View.VISIBLE);
+               Intent it = new Intent(CadastrarFornecedor.this, Fornecedores.class);
+               startActivity(it);
+           }else
+               {
+                   Toast.makeText(CadastrarFornecedor.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                   Intent intent = new Intent(CadastrarFornecedor.this, MainActivity.class);
+                   startActivity(intent);
+                   finish();
+               }
         }
     }
 }

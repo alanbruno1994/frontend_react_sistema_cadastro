@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.example.mobilesystem.R;
 
 public class MenuSystem extends AppCompatActivity {
-    private Button produtos,fornecedores;
+    private BootstrapButton produtos,fornecedores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MenuSystem extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         produtos=findViewById(R.id.buttonProdutos);
         fornecedores=findViewById(R.id.buttonFornecedores);
+        setTitle("Menu");
         produtos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

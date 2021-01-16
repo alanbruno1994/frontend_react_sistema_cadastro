@@ -40,5 +40,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+    implementation 'com.beardedhen:androidbootstrap:2.3.2'
 
 }

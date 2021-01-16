@@ -11,7 +11,8 @@ export default class Header extends Component {
         console.log(sessionStorage.getItem("tk"));
         if(sessionStorage.getItem("tk")==="" || sessionStorage.getItem("tk")===undefined)
         {
-            window.location.href = "http://localhost:3000";            
+            window.location.href = "http://localhost:3000"; 
+            sessionStorage.setItem("invalid","")           
         }
         
     }

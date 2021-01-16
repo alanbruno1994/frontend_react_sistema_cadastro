@@ -36,6 +36,7 @@ public class ProdutoResources {
 
 	@GetMapping
 	public ResponseEntity<List<Produto>> findAll(@RequestHeader String Authorization) {
+		System.out.println("aqui chegou "+Authorization);
 		jwtToken.authorize(Authorization);
 		List<Produto> list = produtoService.findAll();
 		return ResponseEntity.ok().body(list);

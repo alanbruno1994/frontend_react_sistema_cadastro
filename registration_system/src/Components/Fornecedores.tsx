@@ -28,13 +28,30 @@ export default class Fornecedores extends Component {
         this.updateName = this.updateName.bind(this);
         this.updateState = this.updateState.bind(this);
         this.Cadastrar = this.Cadastrar.bind(this);
+        this.erroCaptured=this.erroCaptured.bind(this);
+        this.erroForm = this.erroForm.bind(this);
         this.closeRegistration();
+    }
+
+    erroCaptured(e: any) {
+        if (e.response.status = 423) {
+            sessionStorage.setItem("tk", "")
+            sessionStorage.setItem("invalid", "Sua conta foi experida, entre novamente!")
+            window.location.href = "http://localhost:3000";
+        } else {
+            this.state.erro = ""; this.state.visable = "none"; this.setState(this.state);
+        }
     }
 
     capturedList(elements: Fornecedor[]) {
         this.list = [...elements];
     }
 
+    erroForm(valor: string) {
+        this.state.visable = "none";
+        this.state.erro = valor;
+        this.setState(this.state);
+    }
 
     generateRegistration() {
         this.state.visable = "flex";
@@ -42,9 +59,16 @@ export default class Fornecedores extends Component {
     }
 
     closeRegistration() {
+        console.log(1);
+        api.defaults.headers.common['Authorization'] = "" + sessionStorage.getItem("tk");
         api.get("fornecedores").then(resp => resp.data).then((e: Fornecedor[]) => {
+            console.log(2);
             this.state.visable = "none"; this.state.list = [...e]; this.setState(this.state);
-        });
+        }).catch((e: any) => {
+            console.log(3);
+            this.erroCaptured(e);
+        }
+        );
     }
 
 
@@ -71,6 +95,7 @@ export default class Fornecedores extends Component {
                             cnpj: this.state.cnpj,
                             state: this.state.state
                         }
+                        api.defaults.headers.common['Authorization'] = "" + sessionStorage.getItem("tk");
                         api.post("fornecedores", post).catch((erro) => {
                             api.get("fornecedores").then(resp => resp.data).then((e: Fornecedor[]) => {
                                 this.state.visable = "none"; this.state.list = [...e];
@@ -79,29 +104,24 @@ export default class Fornecedores extends Component {
                                 }                               
                                 this.setState(this.state);
                                 return
-                            });
-                        });
+                            }).catch((e: any) => {
+                                this.erroCaptured(e);
+                            }
+                            );
+                        })
                         this.closeRegistration();
                     }else
                     {
-                        this.state.visable = "none";
-                        this.state.erro = "O estado deve ter pelo menos 3 dígitos!"
-                        this.setState(this.state);
+                        this.erroForm("O nome deve ter pelo menos 12 dígitos!")                         
                     }
                 } else {
-                    this.state.visable = "none";
-                    this.state.erro = "O nome deve ter pelo menos 12 dígitos!"
-                    this.setState(this.state);
+                    this.erroForm("O estado deve ter pelo menos 3 dígitos!")                    
                 }
             } else {
-                this.state.visable = "none";
-                this.state.erro = "O CNPJ deve ter 14 números!"
-                this.setState(this.state);
+                this.erroForm("O CNPJ deve ter 14 números!")                
             }
         } else {
-            this.state.visable = "none";
-            this.state.erro = "Por favor, para realizar o cadastro você deve preencher todos os campos!"
-            this.setState(this.state);
+            this.erroForm("Por favor, para realizar o cadastro você deve preencher todos os campos!")             
         }
     }
 

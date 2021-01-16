@@ -12,17 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
-        <EditText
+        <com.beardedhen.androidbootstrap.BootstrapEditText
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
+            app:bootstrapSize="md"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true"
             android:hint="Nome"
-            android:inputType="textPersonName"
-            android:textColor="@color/white" />
+            />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -30,17 +32,18 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
-        <EditText
+        <com.beardedhen.androidbootstrap.BootstrapEditText
             android:id="@+id/state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
+            app:bootstrapSize="md"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true"
             android:hint="Estado"
-            android:inputType="textPersonName"
-            android:textColor="@color/white" />
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -50,16 +53,16 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
-
-        <EditText
+        <com.beardedhen.androidbootstrap.BootstrapEditText
             android:id="@+id/cnpj"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
+            app:bootstrapSize="md"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true"
             android:hint="CNPJ"
-            android:inputType="textPersonName"
-            android:textColor="@color/white" />
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -69,12 +72,18 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal" >
-
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/buttonRemove"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cadastrar" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Logar"
+            app:bootstrapBrand="info"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:roundedCorners="true"
+            app:showOutline="false"
+            tools:ignore="MissingClass" />
     </LinearLayout>
 </LinearLayout>

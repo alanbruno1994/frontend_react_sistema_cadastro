@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import '../CSS/Global.css'
 import Table from './Table';
-import { Fornecedor, Produto, statesProduto } from '../Intefaces/statesAplication';
+import { Produto, statesProduto } from '../Intefaces/statesAplication';
 import '../CSS/FornecedoresStyle.css'
 import { AiOutlineBars } from "react-icons/ai";
 import api from '../Services/Api';
 import Header from './Header';
-import { Erro } from '../Intefaces/InterfaceErro';
+
 
 
 export default class Fornecedores extends Component {
@@ -34,7 +34,10 @@ export default class Fornecedores extends Component {
         this.updateFornecedor = this.updateFornecedor.bind(this);
         this.updateName = this.updateName.bind(this);
         this.filtrerOperation = this.filtrerOperation.bind(this);
+        this.erroCaptured = this.erroCaptured.bind(this);
+        this.erroForm = this.erroForm.bind(this);
         this.closeRegistration();
+
     }
 
 
@@ -48,31 +51,36 @@ export default class Fornecedores extends Component {
         this.setState(this.state);
     }
 
-
+    erroForm(valor: string) {
+        this.state.visable = "none";
+        this.state.erro = valor;
+        this.setState(this.state);
+    }
+    erroCaptured(e: any) {
+        if (e.response.status = 423) {
+            sessionStorage.setItem("tk", "")
+            sessionStorage.setItem("invalid", "Sua conta foi experida, entre novamente!")
+            window.location.href = "http://localhost:3000";
+        } else {
+            this.state.erro = ""; this.state.visable = "none"; this.setState(this.state);
+        }
+    }
 
     generateRegistration() {
         this.state.visable = "flex";
         this.setState(this.state);
     }
 
-    closeRegistration() {    
-        api.defaults.headers.common['Authorization'] = ""+sessionStorage.getItem("tk");
-        
-        api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {            
+    closeRegistration() {
+        api.defaults.headers.common['Authorization'] = "" + sessionStorage.getItem("tk");
+        api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {
             this.state.visable = "none";
             this.state.list = [...e];
             this.state.erro = "";
             this.setState(this.state);
 
-        }).catch((e: any) => {            
-        
-            if(e.response.status=423)
-            {
-                sessionStorage.setItem("tk","")
-                sessionStorage.setItem("invalid","Sua conta foi experida, entre novamente!")
-                window.location.href = "http://localhost:3000";
-            }
-            this.state.erro = ""; this.state.visable = "none"; this.setState(this.state);
+        }).catch((e: any) => {
+            this.erroCaptured(e);
         }
         );
 
@@ -99,7 +107,6 @@ export default class Fornecedores extends Component {
     }
 
     Cadastrar() {
-
         if (this.state.name.length > 0 && this.state.code.length > 0 && this.state.category.length > 0 && this.state.fornecedor.length > 0) {
             if (this.state.code.length == 13) {
                 if (this.state.name.length >= 2) {
@@ -111,47 +118,41 @@ export default class Fornecedores extends Component {
                                 category: this.state.category
 
                             }
+                            api.defaults.headers.common['Authorization'] = "" + sessionStorage.getItem("tk");
                             api.post("produtos" + "/" + this.state.fornecedor, post).then(e => this.closeRegistration()).catch((erro) => {
                                 api.get("produtos").then(resp => resp.data).then((e: Produto[]) => {
                                     this.state.visable = "none"; this.state.list = [...e];
                                     if (erro.response) {
                                         this.state.erro = erro.response.data.message
-                                    }
-                                    console.log(this.state)
+                                    }                                
                                     this.setState(this.state);
                                     return
-                                });
+                                }).catch((e: any) => {
+                                    this.erroCaptured(e);
+                                }
+                                );
                             });
                         } else {
-                            this.state.visable = "none";
-                            this.state.erro = "O CNPJ deve ter 14 números!"
-                            this.setState(this.state);
+                            this.erroForm("O CNPJ deve ter 14 números!")                           
                         }
                     } else {
-                        this.state.visable = "none";
-                        this.state.erro = "A categoria deve ter pelo menos 2 caracteres!"
-                        this.setState(this.state);
+                        this.erroForm("A categoria deve ter pelo menos 2 caracteres!")                        
                     }
                 } else {
-                    this.state.visable = "none";
-                    this.state.erro = "O nome do produto deve ter pelo menos 2 caracteres!"
-                    this.setState(this.state);
+                    this.erroForm("O nome do produto deve ter pelo menos 2 caracteres!")                
                 }
             } else {
-                this.state.visable = "none";
-                this.state.erro = "O código de barras deve ter 13 dígitos!"
-                this.setState(this.state);
+                this.erroForm("O código de barras deve ter 13 dígitos!")                
             }
-        } else {
-            this.state.visable = "none";
-            this.state.erro = "Por favor, para realizar o cadastro você deve preencher todos os campos!"
-            this.setState(this.state);
+        } else {        
+            this.erroForm("Por favor, para realizar o cadastro você deve preencher todos os campos!")           
         }
 
 
     }
 
     filtrerOperation() {
+        api.defaults.headers.common['Authorization'] = "" + sessionStorage.getItem("tk");
         api.get("produtos/cnpj/" + this.state.filtrer).then(resp => resp.data).then((e: Produto[]) => {
             this.state.visableFilter = "none";
             this.state.list = [...e];
@@ -159,7 +160,7 @@ export default class Fornecedores extends Component {
             this.setState(this.state);
 
         }).catch((e: any) => {
-            this.state.erro = ""; this.state.visableFilter = "none"; this.setState(this.state);
+            this.erroCaptured(e);
         }
         );
 
@@ -167,8 +168,6 @@ export default class Fornecedores extends Component {
 
 
     render() {
-
-
         const styles =
         {
             height: '60px'
@@ -215,7 +214,7 @@ export default class Fornecedores extends Component {
                 <div className="background_white areaRegisterFornecedor font_Montserrat">
                     <div><h3>Filtrar por fornecedor</h3></div>
                     <div><b>Fornecedor</b></div>
-                    <div><input type="text" style={style300px} onChange={e => this.updateFiltrer(e)}></input></div>
+                    <div><input type="text" style={style300px} placeholder="Insira o CNPJ!" onChange={e => this.updateFiltrer(e)}></input></div>
                     <div><button className="background_green text_color_withe buttonOperation" onClick={e => this.closeFilter()}>Cancelar</button><button className="background_green text_color_withe buttonOperation margin10pxright" onClick={e => this.filtrerOperation()}>Filtrar</button></div>
                 </div>
             </div>

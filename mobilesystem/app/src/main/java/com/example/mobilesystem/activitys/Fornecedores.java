@@ -5,14 +5,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobilesystem.R;
+import com.example.mobilesystem.constants.Constants;
 import com.example.mobilesystem.entities.Fornecedor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +28,7 @@ import java.util.Scanner;
 public class Fornecedores extends AppCompatActivity {
     private HashSet<Fornecedor> fornecedoresList=new HashSet<>();
     private TextView id,name,state,cnpj,total;
-    private static String URL = "https://app-backendjava.herokuapp.com";
+    private boolean erroTeste=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class Fornecedores extends AppCompatActivity {
         state=findViewById(R.id.state);
         cnpj=findViewById(R.id.cnpj);
         total=findViewById(R.id.total);
+        setTitle("Fornecedores");
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
@@ -46,6 +50,20 @@ public class Fornecedores extends AppCompatActivity {
         };
         this.getOnBackPressedDispatcher().addCallback(this, callback);
         new GetFornecedores().execute();
+        Configuration configuration = getResources().getConfiguration();
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            id.setTextSize(7);
+            name.setTextSize(7);
+            state.setTextSize(7);
+            total.setTextSize(7);
+            cnpj.setTextSize(7);
+        } else {
+            id.setTextSize(5);
+            name.setTextSize(5);
+            state.setTextSize(5);
+            total.setTextSize(5);
+            cnpj.setTextSize(5);
+        }
     }
 
     private class GetFornecedores extends AsyncTask<Void, Void, Void> {
@@ -54,10 +72,11 @@ public class Fornecedores extends AppCompatActivity {
         protected synchronized Void doInBackground(Void... params) {
 
             try {
-                java.net.URL url = new URL(URL + "/fornecedores");
+                java.net.URL url = new URL(Constants.getURL() + "/fornecedores");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty ("Authorization", Constants.getToken());
                 connection.connect();
                 Scanner sc = new Scanner(connection.getInputStream(), "UTF-8");
                 String jsonDeResposta = "";
@@ -70,11 +89,12 @@ public class Fornecedores extends AppCompatActivity {
                 fornecedoresList.addAll(list);
             }catch(Exception e)
             {
-                e.printStackTrace();
+                erroTeste=true;
             }
             return  null;
         }
         protected void onPostExecute(Void result) {
+            if(erroTeste==false) {
             if(fornecedoresList!=null) {
                 String _id="",_name="",_state="",_cnpj="",_total="";
                 for (Fornecedor fornecedor : fornecedoresList) {
@@ -93,6 +113,13 @@ public class Fornecedores extends AppCompatActivity {
                 state.setText(_state);
                 cnpj.setText(_cnpj);
                 total.setText(_total);
+            }
+        }else
+            {
+                Toast.makeText(Fornecedores.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Fornecedores.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         }
     }

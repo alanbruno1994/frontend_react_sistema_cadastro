@@ -1,5 +1,6 @@
 package com.example.mobilesystem.activitys;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,16 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.mobilesystem.R;
+import com.example.mobilesystem.constants.Constants;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
 public class RemoveProduto extends AppCompatActivity {
-    private EditText ID;
-    private Button remove;
-    private static String URL = "https://app-backendjava.herokuapp.com";
+    private BootstrapEditText ID;
+    private BootstrapButton remove;
+    private boolean erroTeste=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,15 @@ public class RemoveProduto extends AppCompatActivity {
                 }
             }
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent it=new Intent(RemoveProduto.this,Produtos.class);
+                startActivity(it);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private class Remove_Produto extends AsyncTask<Void, Void, Void> {
@@ -48,24 +61,33 @@ public class RemoveProduto extends AppCompatActivity {
         protected synchronized Void doInBackground(Void... params) {
             Integer id = Integer.parseInt(ID.getText().toString());
             try {
-                java.net.URL url = new URL(URL + "/produtos/" + id);
+                java.net.URL url = new URL(Constants.getURL() + "/produtos/" + id);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty ("Authorization", Constants.getToken());
                 connection.setRequestMethod("DELETE");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.connect();
                 String jsonDeResposta = new Scanner(connection.getInputStream()).next();
                 connection.disconnect();
             } catch (Exception e) {
-                e.printStackTrace();
+                erroTeste=true;
             }
             return null;
         }
 
         protected void onPostExecute(Void result) {
-            Toast.makeText(RemoveProduto.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
-            remove.setVisibility(View.VISIBLE);
-            Intent it=new Intent(RemoveProduto.this, Produtos.class);
-            startActivity(it);
+            if(erroTeste==false) {
+                Toast.makeText(RemoveProduto.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
+                remove.setVisibility(View.VISIBLE);
+                Intent it = new Intent(RemoveProduto.this, Produtos.class);
+                startActivity(it);
+            }else
+                {
+                    Toast.makeText(RemoveProduto.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RemoveProduto.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
         }
     }
 }

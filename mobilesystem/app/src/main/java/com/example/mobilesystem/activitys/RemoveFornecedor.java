@@ -1,5 +1,6 @@
 package com.example.mobilesystem.activitys;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,22 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 import com.example.mobilesystem.R;
-import com.example.mobilesystem.entities.Fornecedor;
+import com.example.mobilesystem.constants.Constants;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
 public class RemoveFornecedor extends AppCompatActivity {
-    private EditText ID;
-    private Button remove;
-    private static String URL = "https://app-backendjava.herokuapp.com";
+    private BootstrapEditText ID;
+    private BootstrapButton remove;
+    private boolean erroTeste=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_fornecedor);
+        setTitle("Remove Fornecedor");
         ID = findViewById(R.id.state);
         remove=findViewById(R.id.buttonRemove);
         remove.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +44,14 @@ public class RemoveFornecedor extends AppCompatActivity {
                 }
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent it=new Intent(RemoveFornecedor.this,Fornecedores.class);
+                startActivity(it);
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private class Remove_Fornecedor extends AsyncTask<Void, Void, Void> {
@@ -48,8 +60,9 @@ public class RemoveFornecedor extends AppCompatActivity {
         protected synchronized Void doInBackground(Void... params) {
             Integer id = Integer.parseInt(ID.getText().toString());
             try {
-                java.net.URL url = new URL(URL + "/fornecedores/" + id);
+                java.net.URL url = new URL(Constants.getURL() + "/fornecedores/" + id);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty ("Authorization", Constants.getToken());
                 connection.setRequestMethod("DELETE");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.connect();
@@ -58,16 +71,24 @@ public class RemoveFornecedor extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                  erroTeste=true;
             }
             return null;
         }
 
         protected void onPostExecute(Void result) {
-            Toast.makeText(RemoveFornecedor.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
-            remove.setVisibility(View.VISIBLE);
-            Intent it=new Intent(RemoveFornecedor.this, Fornecedores.class);
-            startActivity(it);
+            if(erroTeste==false) {
+                Toast.makeText(RemoveFornecedor.this, "Operação realizada!", Toast.LENGTH_SHORT).show();
+                remove.setVisibility(View.VISIBLE);
+                Intent it = new Intent(RemoveFornecedor.this, Fornecedores.class);
+                startActivity(it);
+            }else
+                {
+                    Toast.makeText(RemoveFornecedor.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RemoveFornecedor.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
         }
     }
 }

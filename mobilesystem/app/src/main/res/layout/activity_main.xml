@@ -13,39 +13,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/editTextUser"
+        <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:ems="10"
+            app:bootstrapSize="md"
+            app:bootstrapBrand="info"
+            app:roundedCorners="true"
             android:hint="User"
-            android:inputType="textPersonName"
-            android:textColor="@color/green"
-            android:textSize="16dp" />
-    </LinearLayout>
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+            />
 
-      <EditText
-          android:id="@+id/editTextPassoword"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:layout_marginRight="10dp"
-          android:layout_weight="1"
-          android:background="@color/white"
-          android:ems="10"
-          android:hint="Senha"
-          android:inputType="textPassword"
-          android:textColor="@color/green"
-          android:textSize="16dp" /></LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            app:bootstrapSize="md"
+            app:roundedCorners="true"
+            app:bootstrapBrand="info"
+            android:id="@+id/password"
+            />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,13 +54,20 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/buttonProdutos"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:text="Logar" />
+            android:text="Logar"
+            app:bootstrapBrand="info"
+            app:bootstrapSize="lg"
+            app:buttonMode="regular"
+            app:roundedCorners="true"
+            app:showOutline="false"
+            tools:ignore="MissingClass" />
+
+
     </LinearLayout>
 </LinearLayout>
