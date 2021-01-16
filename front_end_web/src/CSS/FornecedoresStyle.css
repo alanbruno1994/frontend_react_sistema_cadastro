@@ -1,0 +1,25 @@
+.flex-container_fornecedor {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+  
+  .flex-items_fornecedor:nth-child(1) {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    order: 0;
+  }
+
+  .areaRegisterFornecedor
+  {
+        border-radius: 5px;
+        padding: 30px;
+  }
+
+  
