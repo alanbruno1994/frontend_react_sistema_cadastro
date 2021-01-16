@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.registrationsystem.workshop.config.util.JwtTokenUtil;
 import com.registrationsystem.workshop.entities.Fornecedor;
 import com.registrationsystem.workshop.services.FornecedorService;
+import com.registrationsystem.workshop.services.JwtToken;
 
 
 @RestController
@@ -24,7 +24,7 @@ import com.registrationsystem.workshop.services.FornecedorService;
 public class FornecedorResources {
 	
 	@Autowired
-	private JwtTokenUtil jwtToken;
+	private JwtToken jwtToken;
 	
 	@Autowired
 	private FornecedorService fornecedorService;

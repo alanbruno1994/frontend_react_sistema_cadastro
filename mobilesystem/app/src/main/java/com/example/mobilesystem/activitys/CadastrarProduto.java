@@ -107,11 +107,15 @@ public class CadastrarProduto extends AppCompatActivity {
                 printStream.println(Produto.Json(produto));
 
                 connection.connect();
-
-                String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                try {
+                    String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
 
             } catch (Exception e) {
+                e.printStackTrace();
                 erroTeste = true;
             }
             return null;
@@ -123,13 +127,12 @@ public class CadastrarProduto extends AppCompatActivity {
                 register.setVisibility(View.VISIBLE);
                 Intent it = new Intent(CadastrarProduto.this, Produtos.class);
                 startActivity(it);
-            }else
-                {
-                    Toast.makeText(CadastrarProduto.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CadastrarProduto.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+            } else {
+                Toast.makeText(CadastrarProduto.this, "A sua conta pode ter sido expirado, você terá que entrar na conta novamente!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CadastrarProduto.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 }

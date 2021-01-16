@@ -67,7 +67,11 @@ public class RemoveProduto extends AppCompatActivity {
                 connection.setRequestMethod("DELETE");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.connect();
-                String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                try {
+                    String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 connection.disconnect();
             } catch (Exception e) {
                 erroTeste=true;

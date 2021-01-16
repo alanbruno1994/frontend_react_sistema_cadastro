@@ -97,11 +97,16 @@ public class CadastrarFornecedor extends AppCompatActivity {
                 PrintStream printStream = new PrintStream(connection.getOutputStream()); printStream.println(Fornecedor.Json(fornecedor));
 
                 connection.connect();
-
-                String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                try {
+                    String jsonDeResposta = new Scanner(connection.getInputStream()).next();
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
 
             } catch (Exception e) {
+                e.printStackTrace();
                 erroTeste=true;
             }
             return null;

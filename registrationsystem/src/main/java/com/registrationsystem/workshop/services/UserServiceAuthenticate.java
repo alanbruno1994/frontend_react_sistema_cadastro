@@ -1,10 +1,9 @@
-package com.registrationsystem.workshop.services.util;
+package com.registrationsystem.workshop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.registrationsystem.workshop.entities.UserSystem;
-import com.registrationsystem.workshop.services.UserService;
 import com.registrationsystem.workshop.services.exception.UsernameNotFoundException;
 
 @Service

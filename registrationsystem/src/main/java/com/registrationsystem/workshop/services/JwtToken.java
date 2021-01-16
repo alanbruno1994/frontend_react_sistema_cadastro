@@ -1,4 +1,4 @@
-package com.registrationsystem.workshop.config.util;
+package com.registrationsystem.workshop.services;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,10 +17,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtToken implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;
-	public static final long JWT_TOKEN_VALIDITY = 24* 60 * 60 * 1000;// 3 horas
-	//public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 1000;// 24 horas
+	public static final long JWT_TOKEN_VALIDITY = 1* 1 * 60 * 1000;// 3 horas
+	
 
 	@Value("${jwt.secret}")
 	private String secret;
